@@ -168,7 +168,17 @@ app.post('/api/contact', (req, res) => {
 
   res.json({ success: true, message: 'Message received! I will get back to you soon.' })
 })
+import path from 'path'
+import { fileURLToPath } from 'url'
 
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
+
+app.use(express.static(path.join(__dirname, '../dist')))
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'))
+})
 app.listen(PORT, () => {
   console.log(`Portfolio API running on http://localhost:${PORT}`)
 })
